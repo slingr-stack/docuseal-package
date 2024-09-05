@@ -53,7 +53,11 @@
             "type": "script",
             "namespace": "utils",
             "path": "/scripts/utils.js"
+        },
+        {
+            "type": "listener",
+            "namespace": "listeners",
+            "path": "/listeners/webhook.js"
         }
-
     ]
 }
