@@ -26,3 +26,32 @@ exports.verifySecret = function (secret) {
     }
     return secret === webhooksSecret;
 };
+
+/**
+ * Downloads the audit log of a submission.
+ *
+ * @param submissionId the ID of the submission
+ * @returns {*} a file object
+ */
+exports.downloadAuditLog = function(submissionId) {
+    if (!submissionId) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [submissionId].');
+        return;
+    }
+    let submission = pkg.docuseal.api.get(`/submissions/${submissionId}`);
+    let url = submission.audit_log_url;
+    sys.logs.debug('[docuseal] Downloading document from: ' + url);
+
+    httpOptions = {
+        path: url,
+        settings: {
+            forceDownload: true,
+            downloadSync: true,
+            fileName: 'document.pdf'
+        }
+    };
+
+    let options = checkHttpOptions(url, httpOptions);
+    return httpService.get(options);
+};
+
