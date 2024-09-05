@@ -50,7 +50,7 @@ exports.downloadAuditLog = function(submissionId) {
         }
     };
 
-    return pkg.docuseal.api.get(httpOptions);
+    return dependencies.http.get(httpOptions);
 };
 
 
@@ -85,6 +85,6 @@ exports.downloadDocument = function(submissionId) {
         }
     };
 
-    return pkg.docuseal.api.get(httpOptions);
+    return dependencies.http.get(httpOptions);
 };
 
