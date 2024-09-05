@@ -35,11 +35,46 @@ exports.verifySecret = function (secret) {
  */
 exports.downloadAuditLog = function(submissionId) {
     if (!submissionId) {
-        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [submissionId].');
-        return;
+        throw 'Invalid argument received. This helper should receive the following parameters as non-empty strings: [submissionId].';
     }
     let submission = pkg.docuseal.api.get(`/submissions/${submissionId}`);
     let url = submission.audit_log_url;
+    sys.logs.debug('[docuseal] Downloading document from: ' + url);
+
+    httpOptions = {
+        path: url,
+        settings: {
+            forceDownload: true,
+            downloadSync: true,
+            fileName: 'document.pdf'
+        }
+    };
+
+    let options = checkHttpOptions(url, httpOptions);
+    return httpService.get(options);
+};
+
+
+/**
+ * Downloads the last document on a submission.
+ *
+ * @param submissionId the ID of the submission
+ * @returns {*} a file object
+ */
+exports.downloadDocument = function(submissionId) {
+    if (!submissionId) {
+        throw 'Invalid argument received. This helper should receive the following parameters as non-empty strings: [submissionId].';
+    }
+    let submission = pkg.docuseal.api.get(`/submissions/${submissionId}`);
+    if (!submission.documents) {
+        throw 'Submission has not documents';
+    }
+    let url;
+    submission.documents.forEach(document => {
+        if (document.url) {
+            url = document.url;
+        }
+    })
     sys.logs.debug('[docuseal] Downloading document from: ' + url);
 
     httpOptions = {
