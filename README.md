@@ -72,6 +72,25 @@ More information about making HTTP calls, please refer to the documentation of t
 
 Finally, there are some helpers that are explained below.
 
+## Download audit logs and documents
+
+The package provides the following helpers to download audit logs and documents from submissions:
+
+```js
+let file = pkg.docuseal.utils.downloadAuditLog(submissionId);
+let file = pkg.docuseal.utils.downloadDocument(submissionId);
+```
+
+Keep in mind that `downloadDocument(submissionId)` returns the last document associated with the submissions. For example, you could do this:
+
+```js
+let file = pkg.docuseal.utils.downloadDocument(submissionId);
+record.lock(record => {
+    record.field('file').val(file.id);
+    sys.data.save(file);
+});
+```
+
 # About Slingr
 
 Slingr is a low-code rapid application development platform that speeds up development,
