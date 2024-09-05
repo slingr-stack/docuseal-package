@@ -42,7 +42,7 @@ exports.downloadAuditLog = function(submissionId) {
     sys.logs.debug('[docuseal] Downloading document from: ' + url);
 
     httpOptions = {
-        path: url,
+        url: url,
         settings: {
             forceDownload: true,
             downloadSync: true,
@@ -77,7 +77,7 @@ exports.downloadDocument = function(submissionId) {
     sys.logs.debug('[docuseal] Downloading document from: ' + url);
 
     httpOptions = {
-        path: url,
+        url: url,
         settings: {
             forceDownload: true,
             downloadSync: true,
