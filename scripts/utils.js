@@ -50,8 +50,7 @@ exports.downloadAuditLog = function(submissionId) {
         }
     };
 
-    let options = checkHttpOptions(url, httpOptions);
-    return httpService.get(options);
+    return httpService.get(httpOptions);
 };
 
 
@@ -86,7 +85,6 @@ exports.downloadDocument = function(submissionId) {
         }
     };
 
-    let options = checkHttpOptions(url, httpOptions);
-    return httpService.get(options);
+    return httpService.get(httpOptions);
 };
 
